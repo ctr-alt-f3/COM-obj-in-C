@@ -319,6 +319,8 @@ RegCloseKey(key);
 return S_OK;
 }
 
+
+
 HRESULT DllUnregisterServer(){
 
 LSTATUS status = RegDeleteTreeA(HKEY_CLASSES_ROOT,"CLSID\\{0ba1cd58-89db-4102-bc74472b7a65c0ba}");
@@ -329,6 +331,12 @@ if(status!=ERROR_SUCCESS){
 
 }
 
+HRESULT DllCanUnloadNow(){
 
+	if(lock_counter == 0 && objcounter == 0){
+		return S_OK;
+	}
+	return S_FALSE;
+}
 
 
